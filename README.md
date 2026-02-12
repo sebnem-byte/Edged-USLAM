@@ -4,7 +4,7 @@ This repository contains the **Edged-USLAM** workspace, a modified and container
 
 ## 🐳 Installation (Docker - Highly Recommended)
 
-This project relies on specific dependencies (older ROS versions, specific Eigen/Ceres libraries). To avoid dependency hell, **we strongly recommend using the pre-built Docker container.**
+To avoid dependency conflicts and ensure reproducibility, **we strongly recommend using the pre-built Docker container.**
 
 ### 1. Pull the Image
 You can pull the ready-to-use image directly from GitHub Container Registry:
@@ -12,7 +12,7 @@ You can pull the ready-to-use image directly from GitHub Container Registry:
     docker pull ghcr.io/sebnem-byte/ze_vio_container:v1
 
 ### 2. Run the Container
-To run the container with GUI support (rviz coverage), use the following command:
+To run the container with GUI support (RViz etc.), use the following command:
 
     xhost +local:docker
     docker run -it --net=host --privileged \
@@ -23,42 +23,40 @@ To run the container with GUI support (rviz coverage), use the following command
 
 ---
 
-## 🛠 Manual Installation (Advanced)
+## 🛠 Manual Installation (Native)
 
-If you insist on building it natively, ensure your environment meets the following strict requirements:
+If you prefer to build the workspace natively on your host machine, ensure you are using the correct ROS version.
 
-* **OS:** Ubuntu 16.04 (Xenial) or 18.04 (Bionic)
-* **ROS:** Kinetic or Melodic
-* **Build System:** `catkin_tools`
-* **Dependencies:**
-    * `eigen_catkin`
-    * `ceres_catkin`
-    * `glog_catkin`, `gflags_catkin`
-    * `minkindr`, `rpg_dvs_ros`
-    * OpenCV 3.x
+### System Requirements
+* **OS:** Ubuntu 20.04 (Focal Fossa)
+* **ROS Version:** ROS Noetic
+* **Build System:** `catkin_tools` (Python 3)
 
-*Note: You will need to manually resolve dependency conflicts if you are not using the Docker container.*
+### Dependencies
+Ensure you have the standard build tools and ROS dependencies installed:
+
+    sudo apt-get install python3-catkin-tools python3-vcstool
+    sudo apt-get install ros-noetic-desktop-full
+
+*Note: This project uses custom versions of `catkin_simple`, `eigen_catkin`, and `ceres_catkin` included in this workspace. Do not install conflicting system versions of these libraries.*
 
 ---
 
 ## ⚙️ Configuration & Calibration
 
-Before running the system, you must ensure the calibration files match your sensor setup.
+Before running the system, ensure the calibration files match your sensor setup.
 
 ### 1. Camera & IMU Calibration (YAML)
-The calibration files are located in:
-`applications/ze_vio_ceres/data/`
+Location: `applications/ze_vio_ceres/data/`
 
-You can create or edit a `.yaml` file (e.g., `DAVIS-example.yaml`) to define:
-* **Intrinsics:** Camera matrix (fx, fy, cx, cy) and distortion coefficients.
-* **Extrinsics (T_B_C):** Transformation matrix between the IMU (Body) and the Camera.
-* **Resolution:** Image width and height.
+Edit or create a `.yaml` file (e.g., `DAVIS-example.yaml`) to define:
+* **Intrinsics:** Camera matrix and distortion coefficients.
+* **Extrinsics (T_B_C):** Transformation between IMU and Camera.
 
 ### 2. Parameter Tuning (.cfg)
-To fine-tune the algorithm or change ROS topic names, navigate to the `cfg/` folder inside `ze_vio_ceres`. Here you can modify:
-* **Topic Names:** If your bag file uses different topics (e.g., `/dvs/events` vs `/cam0/events`).
-* **Ceres Settings:** Optimization iterations, sliding window size, and marginalization settings.
-* **Feature Tracking:** Keyframe selection criteria and feature detection thresholds.
+Location: `applications/ze_vio_ceres/cfg/`
+
+You can modify ROS topic names and algorithm parameters here (e.g., feature tracking thresholds, optimization window size).
 
 ---
 
@@ -67,7 +65,7 @@ To fine-tune the algorithm or change ROS topic names, navigate to the `cfg/` fol
 ### 1. Online / Live Mode (with Rosbag)
 This mode simulates a live sensor stream using a rosbag.
 
-**Step 1: Start RO Core**
+**Step 1: Start ROS Core**
 
     roscore
 
@@ -76,17 +74,16 @@ This mode simulates a live sensor stream using a rosbag.
     rosbag play path/to/your_data.bag
 
 **Step 3: Launch the VIO Node**
-Use the `live_` launch file for online processing. You may need to adjust the `timeshift` parameter to synchronize the IMU and Camera timestamps manually if they are not hardware-synced.
+Use the `live_` launch file. Adjust `timeshift` if your bag file timestamps are not synchronized.
 
     roslaunch ze_vio_ceres live_DAVIS240C.launch \
         camera_name:=DAVIS-example \
-        timeshift_cam_imu:=0.0028100209382249794
+        timeshift_cam_imu:=0.0
 
-* `camera_name`: Must match the filename in the `data/` folder (e.g., `DAVIS-example.yaml`).
-* `timeshift_cam_imu`: Time offset between camera and IMU (in seconds).
+* `camera_name`: Must match the filename in the `data/` folder.
 
 ### 2. Offline Mode (Batch Processing)
-For processing a bag file as fast as possible (non-real-time), use the standard launch files (without the `live_` prefix).
+For processing a bag file as fast as possible (non-real-time):
 
     roslaunch ze_vio_ceres davis240c.launch \
         dataset:=/path/to/your_data.bag \
@@ -104,4 +101,4 @@ The launch files are configured to automatically open **RViz**. You can view:
 
 ### Author
 **Sebnem Byte**
-*Docker Container & Workspace modifications.*
+*Docker Container & Workspace modifications for ROS Noetic.*

@@ -1,0 +1,51 @@
+label: "DAVIS-IJRR17"
+id: a0652606b3d9fd6b62f5448a9e1304be
+cameras:
+- camera:
+    label: dvs
+    id: 0
+    line-delay-nanoseconds: 0
+    image_height: 260
+    image_width: 346
+    type: pinhole
+    intrinsics:
+      cols: 1
+      rows: 4
+      data: [339.9013152375283, 339.8994042107698, 165.5112406158173, 125.9886424126828]
+    distortion:
+      type: radial-tangential
+      parameters:
+        cols: 1
+        rows: 4
+        data: [-0.368340674919122, 0.238934852830918, 7.707631695170766e-04, -1.214709038815e-03]
+  T_B_C:
+    cols: 4
+    rows: 4
+    data: [0.99947889, 0.02639107, 0.01858662, 0.00933934,
+           -0.02605721, 0.99949873, -0.01798085, -0.00883799,
+           -0.01905183, 0.01748717, 0.99966556, 0.01375930,
+           0.0, 0.0, 0.0, 1.0]
+- camera:
+    label: standard
+    id: 1
+    line-delay-nanoseconds: 0
+    image_height: 260
+    image_width: 346
+    type: pinhole
+    intrinsics:
+      cols: 1
+      rows: 4
+      data: [339.9013152375283, 339.8994042107698, 165.5112406158173, 125.9886424126828]
+    distortion:
+      type: radial-tangential
+      parameters:
+        cols: 1
+        rows: 4
+        data: [-0.368340674919122, 0.238934852830918, 7.707631695170766e-04, -1.214709038815e-03]
+  T_B_C:
+    cols: 4
+    rows: 4
+    data: [0.99947889, 0.02639107, 0.01858662, 0.00933934,
+           -0.02605721, 0.99949873, -0.01798085, -0.00883799,
+           -0.01905183, 0.01748717, 0.99966556, 0.01375930,
+           0.0, 0.0, 0.0, 1.0]

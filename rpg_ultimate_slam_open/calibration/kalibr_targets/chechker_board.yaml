@@ -1,0 +1,5 @@
+target_type: 'checkerboard' #gridtype
+targetCols: 9               #number of apriltags
+targetRows: 6               #number of apriltags
+rowSpacingMeters: 0.033           #size of apriltag, edge to edge [m]
+colSpacingMeters: 0.033          #ratio of space between tags to tagSize

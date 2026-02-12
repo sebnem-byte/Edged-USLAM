@@ -1,0 +1,10 @@
+#Acceleromater
+accelerometer_noise_density: 0.0023725367538719715
+accelerometer_random_walk: 0.00015061182915591565
+
+#Gyroscope
+gyroscope_noise_density: 0.00001406809913672288
+gyroscope_random_walk: 9.175680087070294e-06
+
+rostopic: '/dvs/imu_throttle' #Make sure this is correct
+update_rate: 100.0 #Make sure this is correct

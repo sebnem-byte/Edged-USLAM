@@ -1,0 +1,6 @@
+[submodule "numpy_eigen"]
+	path = numpy_eigen
+	url = https://github.com/ethz-asl/numpy_eigen.git
+[submodule "catkin_boost_python_buildtool"]
+	path = catkin_boost_python_buildtool
+	url = https://github.com/ethz-asl/catkin_boost_python_buildtool.git

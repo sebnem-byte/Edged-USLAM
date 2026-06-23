@@ -11,6 +11,12 @@ You can pull the ready-to-use image directly from GitHub Container Registry:
 
     docker pull ghcr.io/sebnem-byte/ze_vio_container:v1
 
+### clone the repo with submodules
+Clone the repo with submodules to home or somewhere else
+
+    cd ~
+    git clone --recursive https://github.com/sebnem-byte/Edged-USLAM.git 
+
 ### 2. Run the Container
 To run the container with GUI support (RViz etc.), use the following command:
 
@@ -19,7 +25,12 @@ To run the container with GUI support (RViz etc.), use the following command:
         --env="DISPLAY" \
         --env="QT_X11_NO_MITSHM=1" \
         --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+        --volume="/home/$(whoami)/Edged-USLAM:/home/edged_uslam/src/Edged-USLAM:rw" \
         ghcr.io/sebnem-byte/ze_vio_container:v1 /bin/bash
+
+### 3. Install missing deps
+
+    sudo apt-get install python3-catkin-tools python3-vcstool
 
 ---
 

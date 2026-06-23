@@ -1,5 +1,6 @@
 #include <imp/feature_matching/brute_force_matcher.hpp>
 #include <imp/feature_matching/hamming.hpp>
+#include <numeric>
 
 namespace ze {
 
